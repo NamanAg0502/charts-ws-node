@@ -10,6 +10,8 @@ This project demonstrates how to create a real-time chart that updates dynamical
 - **Chart.js**: A JavaScript library used for creating dynamic and interactive charts in the browser.
 - **EJS**: A templating engine for rendering HTML on the server side.
 
+#### Video Demo: [Real-Time Chart with PostgreSQL and WebSockets](https://drive.google.com/file/d/1qWbRyJ7JCuGT2WSP9qrFjV9Ov4cVPln8/view?usp=sharing)
+
 ## Concepts
 
 ### PostgreSQL Notifications
