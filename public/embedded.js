@@ -46,7 +46,6 @@ function initWebSocket(chart) {
 
   socket.onmessage = (event) => {
     const updatedData = JSON.parse(event.data);
-    console.log(updatedData);
     const formattedDate = formatDate(new Date(updatedData.date));
 
     if (chart.data.labels.includes(formattedDate)) {
