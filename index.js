@@ -2,12 +2,18 @@ const express = require("express");
 const pg = require("pg");
 const { WebSocketServer } = require("ws");
 const { join } = require("path");
+const cors = require("cors");
 
 const app = express();
 const wss = new WebSocketServer({ noServer: true });
 
 app.use(express.static(join(__dirname, "public")));
 app.set("view engine", "ejs");
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 const client = new pg.Client({
   user: "naman",
@@ -28,7 +34,7 @@ wss.on("connection", (ws) => {
   client.query("LISTEN table_update");
   client.on("notification", (msg) => {
     const payload = JSON.parse(msg.payload);
-    console.log("Notification received:", payload);
+    console.log("Notification received:", JSON.stringify(payload));
     ws.send(JSON.stringify(payload));
   });
   ws.on("close", () => {
@@ -39,12 +45,23 @@ wss.on("connection", (ws) => {
 app.get("/", async (req, res) => {
   try {
     const { rows } = await client.query(
-      "SELECT * FROM nifty_data ORDER BY date DESC"
+      "SELECT DISTINCT on (date) * FROM nifty_data ORDER BY date DESC"
     );
     res.render("index", { data: rows });
   } catch (error) {
     console.error("Error fetching data from PostgreSQL:", error);
     res.status(500).send("Internal Server Error");
+  }
+});
+
+app.get("/embedded", async (req, res) => {
+  try {
+    const { rows } = await client.query(
+      "SELECT DISTINCT on (date) * FROM nifty_data ORDER BY date DESC"
+    );
+    res.json(rows);
+  } catch (error) {
+    res.send("Internal Server Error");
   }
 });
 
