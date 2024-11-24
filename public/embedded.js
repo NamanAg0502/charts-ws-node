@@ -5,7 +5,7 @@ document.head.appendChild(script);
 
 // Initialize chart
 function initChart(data, ctx) {
-  const labels = data.map((row) => formatDate(new Date(row.date)));
+  const labels = data.map((row) => formatDate(new Date(row.Date)));
   const openPrices = data.map((row) => row.open);
   const closePrices = data.map((row) => row.close);
 
@@ -46,7 +46,7 @@ function initWebSocket(chart) {
 
   socket.onmessage = (event) => {
     const updatedData = JSON.parse(event.data);
-    const formattedDate = formatDate(new Date(updatedData.date));
+    const formattedDate = formatDate(new Date(updatedData.Date));
 
     if (chart.data.labels.includes(formattedDate)) {
       const index = chart.data.labels.indexOf(formattedDate);

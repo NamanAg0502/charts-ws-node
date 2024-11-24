@@ -6,8 +6,9 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   try {
     const { rows } = await db.query(
-      "SELECT DISTINCT on (date) * FROM nifty_data ORDER BY date DESC"
+      "SELECT * FROM public.nifty n ORDER BY 2 DESC"
     );
+    console.log(rows);
     res.render("index", { data: rows });
   } catch (error) {
     console.error("Error fetching data from PostgreSQL:", error);
@@ -18,7 +19,7 @@ router.get("/", async (req, res) => {
 router.get("/embedded", async (req, res) => {
   try {
     const { rows } = await db.query(
-      "SELECT DISTINCT on (date) * FROM nifty_data ORDER BY date DESC"
+      "SELECT * FROM public.nifty n ORDER BY 2 DESC"
     );
     res.json(rows);
   } catch (error) {

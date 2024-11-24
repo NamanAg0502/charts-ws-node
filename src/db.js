@@ -1,9 +1,10 @@
 const pg = require("pg");
 
 const client = new pg.Client({
-  user: "naman",
+  user: "hive",
   host: "localhost",
-  database: "postgres",
+  database: "recharts",
+  password: "hive",
   port: 5432,
 });
 
